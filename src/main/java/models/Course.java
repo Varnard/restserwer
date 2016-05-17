@@ -5,7 +5,6 @@ import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLinkNoFollow;
 import org.glassfish.jersey.linking.InjectLinks;
 import org.mongodb.morphia.annotations.*;
-import resources.StudentGradeResource;
 
 import javax.ws.rs.core.Link;
 import javax.xml.bind.annotation.*;
