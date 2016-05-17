@@ -25,7 +25,16 @@ public class CourseListResource {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        return datastore.find(Course.class).asList();
+        List<Course> list = datastore.find(Course.class).asList();
+
+        for (Course c : list)
+        {
+            c.setStudentPath("false");
+            c.setCoursePath("true");
+        }
+
+
+        return list;
     }
 
     @GET
@@ -40,6 +49,8 @@ public class CourseListResource {
 
         if (found!=null)
         {
+            found.setCoursePath("true");
+            found.setStudentPath("false");
             return found;
         }
         else throw new NotFoundException();

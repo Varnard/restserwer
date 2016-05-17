@@ -10,23 +10,15 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Path("students/{index}/courses")
 public class CourseResource {
 
-    public boolean indexExist;
-    public final String qwerty = "students/{index}/courses";
-
-    public CourseResource()
-    {
-        indexExist=true;
-    }
-
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public ArrayList<Course> getAllCourses(@PathParam("index")int index)
+    public List<Course> getAllCourses(@PathParam("index")int index)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -35,7 +27,13 @@ public class CourseResource {
 
         if (found!=null)
         {
-            return found.getCourseList();
+            List<Course> list = found.getCourseList();
+            for (Course c : list)
+            {
+                c.setStudentPath("true");
+                c.setCoursePath("false");
+            }
+            return list;
         }
         else throw new NotFoundException();
     }
@@ -62,6 +60,8 @@ public class CourseResource {
                 .findFirst();
         if (match.isPresent())
         {
+            match.get().setStudentPath("true");
+            match.get().setCoursePath("false");
             return match.get();
         }
         else

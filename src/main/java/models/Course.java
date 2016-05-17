@@ -20,21 +20,24 @@ import java.util.List;
 @XmlRootElement
 public class Course {
 
-    @InjectLinks({
+         @InjectLinks({
             @InjectLink(resource= resources.StudentResource.class, rel = "All students"),
             @InjectLink(resource= resources.CourseListResource.class, rel = "All courses"),
-            @InjectLink(value = "", rel = "self", condition = ""),
-          //  @InjectLink(value = "courses/{courseName}", rel ="self", condition = "{index}==null"),
-           // @InjectLink(resource = resources.CourseResource.class, rel = "Student courses", condition = "{index}!=null"),
-          //  @InjectLink(resource = resources.StudentGradeResource.class, rel= "grades", condition = "{index}!=null"),
+            @InjectLink(value = "students/{index}/courses/{courseName}",  rel ="self", condition ="${instance.studentPath}"),
+            @InjectLink(value = "courses/{courseName}", rel ="self", condition ="${instance.coursePath}"),
+            @InjectLink(resource = resources.CourseResource.class, rel = "Student courses", condition ="${instance.studentPath}"),
+            @InjectLink(resource = resources.StudentGradeResource.class, rel= "grades", condition ="${instance.studentPath}"),
+            @InjectLink(resource = resources.CourseGradeResource.class, rel="grades", condition ="${instance.coursePath}"),
     })
     @XmlElement(name="link")
     @XmlElementWrapper(name ="links")
     @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
-    List<Link> links;
+         List<Link> links;
 
     private String teacher;
     private String courseName;
+    private String studentPath ="true";
+    private String coursePath="false";
 
     @Id
     ObjectId id;
@@ -42,6 +45,8 @@ public class Course {
     @InjectLinkNoFollow
     private ArrayList<Grade> grades;
     private int gradesId;
+
+
 
     public Course() {
     }
@@ -77,6 +82,24 @@ public class Course {
 
     public void setGrades(ArrayList<Grade> grades) {
         this.grades = grades;
+    }
+
+    @XmlTransient
+    public String getCoursePath() {
+        return coursePath;
+    }
+
+    public void setCoursePath(String coursePath) {
+        this.coursePath = coursePath;
+    }
+
+    @XmlTransient
+    public String getStudentPath() {
+        return studentPath;
+    }
+
+    public void setStudentPath(String studentPath) {
+        this.studentPath = studentPath;
     }
 
     public int addGrade(Grade grade)

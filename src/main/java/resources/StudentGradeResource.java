@@ -31,7 +31,12 @@ public class StudentGradeResource {
         {
             for (Grade grade : found.getGrades())
             {
-                if (grade.getStudentIndex()==index)grades.add(grade);
+                if (grade.getStudentIndex()==index)
+                {
+                    grade.setCoursePath("false");
+                    grade.setStudentPath("true");
+                    grades.add(grade);
+                }
             }
         }
 
@@ -56,6 +61,8 @@ public class StudentGradeResource {
 
         if (match.isPresent() && match.get().getStudentIndex()==index)
         {
+            match.get().setStudentPath("true");
+            match.get().setCoursePath("flase");
             return match.get();
         }
         else

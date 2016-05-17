@@ -1,7 +1,8 @@
 package resources;
 
 import com.mongodb.MongoClient;
-import models.*;
+import models.Course;
+import models.Grade;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
@@ -9,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Path("courses/{courseName}/grades")
@@ -17,7 +18,7 @@ public class CourseGradeResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public ArrayList<Grade> getAllGrades(@PathParam("courseName") String courseName)
+    public List<Grade> getAllGrades(@PathParam("courseName") String courseName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -26,7 +27,14 @@ public class CourseGradeResource {
 
         if (found!=null)
         {
-            return found.getGrades();
+            List<Grade> list = found.getGrades();
+            for (Grade g : list)
+            {
+                g.setCoursePath("true");
+                g.setStudentPath("false");
+            }
+
+            return list;
         }
         else throw new NotFoundException();
     }
@@ -54,6 +62,8 @@ public class CourseGradeResource {
 
         if (match.isPresent())
         {
+            match.get().setCoursePath("true");
+            match.get().setStudentPath("false");
             return match.get();
         }
         else

@@ -6,12 +6,12 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
-import resources.StudentGradeResource;
 
 import javax.ws.rs.core.Link;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
 
@@ -23,9 +23,12 @@ import java.util.List;
 @XmlRootElement
 public class Grade {
     @InjectLinks({
-            @InjectLink(value = "students/{index}/courses/{courseName}", rel = "Parent course"),
-            @InjectLink(resource = StudentGradeResource.class, rel = "all Grades"),
-            @InjectLink(value = "students/{index}/courses/{courseName}/grades/{id}", rel = "self"),
+            @InjectLink(value = "students/{index}/courses/{courseName}", rel = "Parent course", condition ="${instance.studentPath}"),
+            @InjectLink(resource = resources.StudentGradeResource.class, rel = "all Grades", condition ="${instance.studentPath}"),
+            @InjectLink(value = "students/{index}/courses/{courseName}/grades/{id}", rel = "self", condition ="${instance.studentPath}"),
+            @InjectLink(value = "courses/{courseName}", rel = "Parent course", condition ="${instance.coursePath}"),
+            @InjectLink(resource = resources.CourseGradeResource.class, rel = "all Grades", condition ="${instance.coursePath}"),
+            @InjectLink(value = "courses/{courseName}/grades/{id}", rel ="self", condition ="${instance.coursePath}"),
     })
     @XmlElement(name="link")
     @XmlElementWrapper(name ="links")
@@ -36,6 +39,8 @@ public class Grade {
     private double mark;
     private String date;
     private int id;
+    private String studentPath ="true";
+    private String coursePath="false";
 
     public Grade(double mark, String date) {
         this.mark = mark;
@@ -76,6 +81,24 @@ public class Grade {
 
     public void setStudentIndex(int studentIndex) {
         this.studentIndex = studentIndex;
+    }
+
+    @XmlTransient
+    public String getCoursePath() {
+        return coursePath;
+    }
+
+    public void setCoursePath(String coursePath) {
+        this.coursePath = coursePath;
+    }
+
+    @XmlTransient
+    public String getStudentPath() {
+        return studentPath;
+    }
+
+    public void setStudentPath(String studentPath) {
+        this.studentPath = studentPath;
     }
 
     @Override
