@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLinks;
 import org.mongodb.morphia.annotations.Embedded;
@@ -13,6 +14,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,14 +40,25 @@ public class Grade {
 
     private int studentIndex;
     private double mark;
-    private String date;
+
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
+    private Date date;
     private int id;
     private String studentPath ="true";
     private String coursePath="false";
 
     public Grade(double mark, String date) {
         this.mark = mark;
-        this.date = date;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        try
+        {
+            this.date = sdf.parse(date);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public Grade() {
@@ -58,11 +72,11 @@ public class Grade {
         this.mark = mark;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(String Date) {
         this.date = date;
     }
 

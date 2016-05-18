@@ -7,6 +7,7 @@ import org.mongodb.morphia.Morphia;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("courses")
@@ -20,21 +21,26 @@ public class CourseListResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public List<Course> getAllCourses()
+    public List<Course> getAllCourses(@DefaultValue("") @QueryParam("teacher") String teacherName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        List<Course> list = datastore.find(Course.class).asList();
+        List<Course> list = new ArrayList<>();
 
-        for (Course c : list)
+        for (Course c : datastore.find(Course.class).asList())
         {
-            c.setStudentPath("false");
-            c.setCoursePath("true");
+            if (teacherName.equals("") || c.getTeacher().equals(teacherName))
+            {
+                c.setStudentPath("false");
+                c.setCoursePath("true");
+                list.add(c);
+            }
+
         }
 
-
-        return list;
+        if (list.isEmpty())throw new NotFoundException();
+        else return list;
     }
 
     @GET

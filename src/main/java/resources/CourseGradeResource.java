@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,9 @@ public class CourseGradeResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public List<Grade> getAllGrades(@PathParam("courseName") String courseName)
+    public List<Grade> getAllGrades(@PathParam("courseName") String courseName,
+                                    @DefaultValue("2") @QueryParam("higherThan") double higherValue,
+                                    @DefaultValue("5") @QueryParam("lowerThan") double lowerValue)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -27,14 +30,18 @@ public class CourseGradeResource {
 
         if (found!=null)
         {
-            List<Grade> list = found.getGrades();
-            for (Grade g : list)
+            List<Grade> list = new ArrayList<>();
+
+            for (Grade grade : found.getGrades())
             {
-                g.setCoursePath("true");
-                g.setStudentPath("false");
+                if (grade.getMark()>higherValue && grade.getMark()<lowerValue)
+                grade.setCoursePath("true");
+                grade.setStudentPath("false");
+                list.add(grade);
             }
 
-            return list;
+            if (list.isEmpty())throw new NotFoundException();
+            else return list;
         }
         else throw new NotFoundException();
     }

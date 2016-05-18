@@ -1,5 +1,7 @@
 import com.mongodb.MongoClient;
-import models.*;
+import models.Course;
+import models.Grade;
+import models.Student;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
@@ -20,6 +22,7 @@ public class RESTserwer {
         final ResourceConfig rc = new ResourceConfig(StudentResource.class, CourseResource.class,
                 StudentGradeResource.class, CourseListResource.class, CourseGradeResource.class);
         rc.packages("org.glassfish.jersey.examples.linking").register(DeclarativeLinkingFeature.class);
+        //rc.register(DateParamConverterProvider.class);
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
@@ -36,6 +39,7 @@ public class RESTserwer {
 
     // create the Datastore connecting to the default port on the local host
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
+        datastore.getDB().dropDatabase();
 
         datastore.ensureIndexes();
 
@@ -43,10 +47,11 @@ public class RESTserwer {
         Course English = new Course("Mr. Englishman","English");
         Course Math = new Course("The scary old Profesor", "Math");
         Course Physics = new Course("Albert Heisenberg", "Physics");
+        Course Physics2 = new Course("Albert Heisenberg", "Physics2");
         Course Spanish = new Course("Senor Spaniard","Spanish");
 
-        Student one = new Student("One", "First", 1 ,"01-01-95");
-        Student two = new Student("Two", "Second", 2 ,"02-02-95");
+        Student one = new Student("One", "First", 1 , "05-12-1994");
+        Student two = new Student("Two", "Second", 2 ,"02-02-1995");
 
         one.addCourse(English);
         one.addCourse(Math);
@@ -55,42 +60,43 @@ public class RESTserwer {
         two.addCourse(Physics);
         two.addCourse(Math);
 
-        one.addGrade(new Grade(3.5,"10-03-14"), "English");
-        one.addGrade(new Grade(3.0,"11-03-14"), "English");
-        one.addGrade(new Grade(4.0,"21-04-14"), "English");
+        one.addGrade(new Grade(3.5,"10-03-2014"), "English");
+        one.addGrade(new Grade(3.0,"11-03-2014"), "English");
+        one.addGrade(new Grade(4.0,"21-04-2014"), "English");
 
-        one.addGrade(new Grade(4.5,"20-03-13"), "Math");
-        one.addGrade(new Grade(3.5,"05-03-13"), "Math");
-        one.addGrade(new Grade(4.5,"24-06-13"), "Math");
-        one.addGrade(new Grade(5.0,"17-05-13"), "Math");
+        one.addGrade(new Grade(4.5,"20-03-2013"), "Math");
+        one.addGrade(new Grade(3.5,"05-03-2013"), "Math");
+        one.addGrade(new Grade(4.5,"24-06-2013"), "Math");
+        one.addGrade(new Grade(5.0,"17-05-2013"), "Math");
 
-        two.addGrade(new Grade(2.0,"20-03-14"), "Spanish");
-        two.addGrade(new Grade(3.0,"31-02-14"), "Spanish");
-        two.addGrade(new Grade(2.0,"01-03-14"), "Spanish");
+        two.addGrade(new Grade(2.0,"20-03-2014"), "Spanish");
+        two.addGrade(new Grade(3.0,"31-02-2014"), "Spanish");
+        two.addGrade(new Grade(2.0,"01-03-2014"), "Spanish");
 
-        two.addGrade(new Grade(4.0,"26-03-13"), "Physics");
-        two.addGrade(new Grade(3.5,"15-03-13"), "Physics");
-        two.addGrade(new Grade(4.5,"04-06-13"), "Physics");
-        two.addGrade(new Grade(5.0,"27-05-13"), "Physics");
+        two.addGrade(new Grade(4.0,"26-03-2013"), "Physics");
+        two.addGrade(new Grade(3.5,"15-03-2013"), "Physics");
+        two.addGrade(new Grade(4.5,"04-06-2013"), "Physics");
+        two.addGrade(new Grade(5.0,"27-05-2013"), "Physics");
 
-        two.addGrade(new Grade(5.0,"28-04-13"), "Math");
-        two.addGrade(new Grade(3.5,"06-03-13"), "Math");
-        two.addGrade(new Grade(4.0,"17-04-13"), "Math");
-        two.addGrade(new Grade(5.0,"09-05-13"), "Math");
+        two.addGrade(new Grade(5.0,"28-04-2013"), "Math");
+        two.addGrade(new Grade(3.5,"06-03-2013"), "Math");
+        two.addGrade(new Grade(4.0,"17-04-2013"), "Math");
+        two.addGrade(new Grade(5.0,"09-05-2013"), "Math");
 
-        if (datastore.getCount(Student.class)>0)
+        if (datastore.getCount(Student.class)>0 || datastore.getCount(Course.class)>0)
         {
 
         }
         else
         {
-            datastore.save(one);
-            datastore.save(two);
-
             datastore.save(English);
             datastore.save(Spanish);
             datastore.save(Math);
             datastore.save(Physics);
+            datastore.save(Physics2);
+
+            datastore.save(one);
+            datastore.save(two);
         }
 
     }

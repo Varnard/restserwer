@@ -1,6 +1,6 @@
 package models;
 
-import org.bson.types.ObjectId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLinkNoFollow;
 import org.glassfish.jersey.linking.InjectLinks;
@@ -9,13 +9,15 @@ import org.mongodb.morphia.annotations.*;
 import javax.ws.rs.core.Link;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Entity("students")
 @Indexes(
-        @Index(value = "Last Name", fields = @Field("lastName"))
+        @Index(value = "Index", fields = @Field("index"))
 )
 @XmlRootElement
 public class Student {
@@ -30,18 +32,17 @@ public class Student {
     @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
     List<Link> links;
 
-     private String name;
+    private String name;
 
     private String lastName;
 
     @Id
-    ObjectId id;
-
     private int index;
 
-    private String birthDate;
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
+    private Date birthDate;
 
-   // @Reference
+    @Reference
     @InjectLinkNoFollow
     private ArrayList<Course> courseList;
 
@@ -51,17 +52,20 @@ public class Student {
         this.name = name;
         this.lastName = lastName;
         this.index = index;
-        this.birthDate = birthDate;
         this.courseList=new ArrayList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        try
+        {
+            this.birthDate = sdf.parse(birthDate);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
-    public Student(String name, String lastName, int index, String birthDate, ArrayList<Course> courseList) {
-        this.name = name;
-        this.lastName = lastName;
-        this.index = index;
-        this.birthDate = birthDate;
-        this.courseList = courseList;
-    }
 
 
     public String getName() {
@@ -91,11 +95,11 @@ public class Student {
     }
 
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -130,6 +134,19 @@ public class Student {
                 .findFirst();
         if (!match.isPresent())courseList.add(course);
 
+    }
+
+    @XmlTransient
+    public Object getId() {
+        return index;
+    }
+
+    protected void setId_(Object id) {
+        index = (int)processId_(id);
+    }
+
+    protected static Object processId_(Object id) {
+        return Integer.parseInt(id.toString());
     }
 
     @Override

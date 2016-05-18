@@ -17,9 +17,11 @@ public class StudentGradeResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public ArrayList<Grade> getAllGrades(@PathParam("index") int index, @PathParam("courseName") String courseName)
+    public ArrayList<Grade> getAllGrades(@PathParam("index") int index, @PathParam("courseName") String courseName,
+                                         @DefaultValue("2") @QueryParam("higherThan") double higherValue,
+                                         @DefaultValue("5") @QueryParam("lowerThan") double lowerValue)
     {
-        ArrayList<Grade> grades = new ArrayList<>();
+        ArrayList<Grade> list = new ArrayList<>();
 
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -31,16 +33,17 @@ public class StudentGradeResource {
         {
             for (Grade grade : found.getGrades())
             {
-                if (grade.getStudentIndex()==index)
+                if (grade.getStudentIndex()==index && grade.getMark()>higherValue && grade.getMark()<lowerValue)
                 {
                     grade.setCoursePath("false");
                     grade.setStudentPath("true");
-                    grades.add(grade);
+                    list.add(grade);
                 }
             }
         }
 
-        return grades;
+        if (list.isEmpty())throw new NotFoundException();
+        else return list;
     }
 
     @GET

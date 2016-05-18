@@ -40,6 +40,7 @@ public class Course {
     private String coursePath="false";
 
     @Id
+    @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     ObjectId id;
 
     @InjectLinkNoFollow
@@ -101,6 +102,17 @@ public class Course {
     public void setStudentPath(String studentPath) {
         this.studentPath = studentPath;
     }
+
+    @XmlTransient
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+
 
     public int addGrade(Grade grade)
     {

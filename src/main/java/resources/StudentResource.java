@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("students")
@@ -17,13 +18,24 @@ public class StudentResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public List<Student> getAllStudents()
+    public List<Student> getAllStudents(@DefaultValue("") @QueryParam("name") String studentName,
+                                        @DefaultValue("") @QueryParam("last name") String studentLastName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        return datastore.find(Student.class).asList();
+        List<Student> list = new ArrayList<>();
+        for (Student s : datastore.find(Student.class).asList())
+        {
+            if ((studentName.equals("") || s.getName().equals(studentName)) &&
+                (studentLastName.equals("") || s.getLastName().equals(studentLastName)))
+            {
+                list.add(s);
+            }
+        }
 
+        if (list.isEmpty())throw new NotFoundException();
+        else return list;
     }
 
     @GET
