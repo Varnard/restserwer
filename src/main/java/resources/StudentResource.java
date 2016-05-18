@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +20,32 @@ public class StudentResource {
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public List<Student> getAllStudents(@DefaultValue("") @QueryParam("name") String studentName,
-                                        @DefaultValue("") @QueryParam("last name") String studentLastName)
+                                        @DefaultValue("") @QueryParam("last name") String studentLastName,
+                                        @DefaultValue("01-01-1970") @QueryParam("bornAfter") String bDateAfter,
+                                        @DefaultValue("01-01-2070") @QueryParam("bornBefore") String bDateBefore,
+                                        @DefaultValue("") @QueryParam("born") String bDate)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
         List<Student> list = new ArrayList<>();
         for (Student s : datastore.find(Student.class).asList())
         {
-            if ((studentName.equals("") || s.getName().equals(studentName)) &&
-                (studentLastName.equals("") || s.getLastName().equals(studentLastName)))
+            try {
+                if (    (studentName.equals("") || s.getName().equals(studentName)) &&
+                        (studentLastName.equals("") || s.getLastName().equals(studentLastName)) &&
+                        s.getBirthDate().after(sdf.parse(bDateAfter)) &&
+                        s.getBirthDate().before(sdf.parse(bDateBefore)) &&
+                        (bDate.equals("") || s.getBirthDate().equals(sdf.parse(bDate))))
+                {
+                    list.add(s);
+                }
+            }
+            catch (Exception e)
             {
-                list.add(s);
+                e.printStackTrace();
             }
         }
 

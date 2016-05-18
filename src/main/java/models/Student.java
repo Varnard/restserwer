@@ -39,7 +39,7 @@ public class Student {
     @Id
     private int index;
 
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="dd-MM-yyyy",timezone="CET")
     private Date birthDate;
 
     @Reference
