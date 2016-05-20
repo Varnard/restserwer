@@ -77,6 +77,10 @@ public class StudentResource {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
+        int newIndex = datastore.find(Student.class).order("-index").limit(1).get().getIndex()+1;
+
+        student.setIndex(newIndex);
+
         datastore.save(student);
 
         return Response.created(URI.create("students/"+ student.getIndex())).build();

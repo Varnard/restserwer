@@ -124,8 +124,10 @@ public class StudentGradeResource {
 
         if (match.isPresent())
         {
-            int id = match.get().addGrade(grade);
-            datastore.save(found);
+
+            Course foundCourse = datastore.find(Course.class, "courseName=", courseName).get();
+            int id = foundCourse.addGrade(grade);
+            datastore.save(foundCourse);
             return Response.created(URI.create("students/" + index + "/courses/" + courseName + "/grades/" + id)).build();
         }
 

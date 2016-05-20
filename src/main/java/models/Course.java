@@ -39,6 +39,7 @@ public class Course {
     private String studentPath ="true";
     private String coursePath="false";
 
+
     @Id
     @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     ObjectId id;
