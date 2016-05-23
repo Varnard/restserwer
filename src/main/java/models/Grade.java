@@ -21,7 +21,7 @@ import java.util.List;
 
 @Embedded("grades")
 @Indexes(
-        @Index(value = "date", fields = @Field("date"))
+        @Index(value = "id", fields = @Field("id"))
 )
 @XmlRootElement
 public class Grade {
@@ -41,8 +41,9 @@ public class Grade {
     private int studentIndex;
     private double mark;
 
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="dd-MM-yyyy",timezone="CET")
     private Date date;
+
     private int id;
     private String studentPath ="true";
     private String coursePath="false";
@@ -76,11 +77,10 @@ public class Grade {
         return date;
     }
 
-    public void setDate(String Date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    //@XmlTransient
     public int getId() {
         return id;
     }

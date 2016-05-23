@@ -71,8 +71,8 @@ public class CourseResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON )
-    public Response addCourse(@PathParam("index") int index, Course course)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    public Response addCourse(@PathParam("index") int index, String courseName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -81,53 +81,53 @@ public class CourseResource {
 
         if (found==null)
         {
-            throw new NotFoundException();
+            String result = "Student not found";
+            return Response.status(404).entity(result).build();
         }
 
-        found.getCourseList().add(course);
-        datastore.save(found);
-
-        return Response.created(URI.create("students/"+index+"/courses/"+ course.getCourseName())).build();
-    }
-
-
-    @PUT
-    @Path("{courseName}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response setStudent(@PathParam("courseName") String courseName, @PathParam("index") int index, Course course)
-    {
-        final Morphia morphia = new Morphia();
-        final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
-
-        Student found = datastore.find(Student.class, "index =", index).get();
-
-        course.setCourseName(courseName);
-        Optional<Course> match
-                = found.getCourseList().stream()
-                .filter(c -> c.getCourseName().equals(courseName))
-                .findFirst();
-        if (match.isPresent())
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
+        if (foundCourse!=null)
         {
-            found.getCourseList().remove(match.get());
+            Optional<Course> match
+                    = found.getCourseList().stream()
+                    .filter(c -> c.getCourseName().equals(courseName))
+                    .findFirst();
+            if (match.isPresent())
+            {
+                String result = "Student already has  the '" + courseName + "' course";
+                return Response.status(400).entity(result).build();
+            }
+            else
+            {
+                found.addCourse(foundCourse);
+                datastore.save(found);
+            }
+        }
+        else
+        {
+            String result = "Course '" + courseName + "' does not exists. \nCreate it first in '/courses'";
+            return Response.status(400).entity(result).build();
         }
 
-        found.getCourseList().add(course);
-        datastore.save(found);
-
-        String result = "Course: " + course + " updated";
-        return Response.status(201).entity(result).build();
-
+        return Response.created(URI.create("students/"+index+"/courses/"+ courseName)).build();
     }
+
 
     @DELETE
     @Path("{courseName}")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response deleteCourse(@PathParam("courseName") String courseName, @PathParam("index") int index)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
         Student found = datastore.find(Student.class, "index =", index).get();
+
+        if (found==null)
+        {
+            String result = "Student not found";
+            return Response.status(404).entity(result).build();
+        }
 
         Optional<Course> match
                 = found.getCourseList().stream()

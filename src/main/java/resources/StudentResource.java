@@ -71,7 +71,7 @@ public class StudentResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response createNewStudent(Student student) {
 
         final Morphia morphia = new Morphia();
@@ -88,7 +88,7 @@ public class StudentResource {
 
     @PUT
     @Path("{index}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response setStudent(@PathParam("index") int index, Student student) {
 
         final Morphia morphia = new Morphia();
@@ -99,7 +99,7 @@ public class StudentResource {
         datastore.save(student);
 
         String result = "Student: " + student + " updated";
-        return Response.status(201).entity(result).build();
+        return Response.status(200).entity(result).build();
 
     }
 

@@ -39,7 +39,7 @@ public class RESTserwer {
 
     // create the Datastore connecting to the default port on the local host
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
-        //datastore.getDB().dropDatabase();
+        datastore.getDB().dropDatabase();
 
         datastore.ensureIndexes();
 

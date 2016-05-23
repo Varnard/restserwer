@@ -74,47 +74,25 @@ public class StudentGradeResource {
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteGrade(@PathParam("index") int index, @PathParam("courseName") String courseName, @PathParam("id") int id)
-    {
-        final Morphia morphia = new Morphia();
-        final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
-
-        Course found = datastore.find(Course.class, "courseName =", courseName).get();
-
-        Optional<Grade> match
-                = found.getGrades().stream()
-                .filter(g -> g.getId()== id)
-                .findFirst();
-
-        if (match.isPresent() && match.get().getStudentIndex()==index)
-        {
-            String result = "Grade removed";
-            found.getGrades().remove(match.get());
-            datastore.save(found);
-            return Response.ok().entity(result).build();
-        }
-        else
-        {
-            String result = "Grade not found";
-            return Response.status(404).entity(result).build();
-        }
-    }
-
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response addGrade(@PathParam("index") int index, @PathParam("courseName") String courseName, Grade grade)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
+        if (grade.getStudentIndex()!=index)
+        {
+            String result = "Wrong student";
+            return Response.status(400).entity(result).build();
+        }
+
         Student found = datastore.find(Student.class, "index =", index).get();
 
         if (found==null)
         {
-            throw new NotFoundException();
+            String result = "Student not found";
+            return Response.status(404).entity(result).build();
         }
 
         Optional<Course> match
@@ -124,8 +102,7 @@ public class StudentGradeResource {
 
         if (match.isPresent())
         {
-
-            Course foundCourse = datastore.find(Course.class, "courseName=", courseName).get();
+            Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
             int id = foundCourse.addGrade(grade);
             datastore.save(foundCourse);
             return Response.created(URI.create("students/" + index + "/courses/" + courseName + "/grades/" + id)).build();
@@ -136,35 +113,95 @@ public class StudentGradeResource {
 
     @PUT
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response setStudent(@PathParam("index") int index, @PathParam("courseName") String courseName, @PathParam("id") int id, Grade grade)
     {
-
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
+        if (grade.getStudentIndex()!=index)
+        {
+            String result = "Wrong student";
+            return Response.status(400).entity(result).build();
+        }
+
         Student found = datastore.find(Student.class, "index =", index).get();
+
+        if (found==null)
+        {
+            String result = "Student not found";
+            return Response.status(404).entity(result).build();
+        }
 
         Optional<Course> matchc
                 = found.getCourseList().stream()
                 .filter(c -> c.getCourseName().equals(courseName))
                 .findFirst();
 
-        Optional<Grade> match
-                = matchc.get().getGrades().stream()
-                .filter(g -> g.getId()== id)
-                .findFirst();
-
-        if (match.isPresent() && match.get().getStudentIndex()==index)
+        if (!matchc.isPresent())
         {
-            matchc.get().getGrades().remove(match.get());
+            String result = "Course not found";
+            return Response.status(404).entity(result).build();
         }
 
-        matchc.get().getGrades().add(grade);
-        datastore.save(found);
-        String result = "Grade updated";
-        return Response.status(201).entity(result).build();
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
 
+        if (foundCourse.updateGrade(grade))
+        {
+            datastore.save(foundCourse);
+            String result = "Grade updated";
+            return Response.status(200).entity(result).build();
+        }
+        else
+        {
+            String result = "Grade not found";
+            return Response.status(404).entity(result).build();
+        }
     }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteGrade(@PathParam("index") int index, @PathParam("courseName") String courseName, @PathParam("id") int id)
+    {
+        final Morphia morphia = new Morphia();
+        final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
+
+        Student found = datastore.find(Student.class, "index =", index).get();
+
+        if (found==null)
+        {
+            String result = "Student not found";
+            return Response.status(404).entity(result).build();
+        }
+
+        Optional<Course> matchc
+                = found.getCourseList().stream()
+                .filter(c -> c.getCourseName().equals(courseName))
+                .findFirst();
+
+        if (!matchc.isPresent())
+        {
+            String result = "Course not found";
+            return Response.status(404).entity(result).build();
+        }
+
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
+
+        if (foundCourse.checkGrade(id,index))
+        {
+            foundCourse.removeGrade(id);
+            datastore.save(foundCourse);
+            String result = "Grade deleted";
+            return Response.status(200).entity(result).build();
+        }
+        else
+        {
+            String result = "Grade not found";
+            return Response.status(404).entity(result).build();
+        }
+    }
+
+
 
 }

@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Entity("courses")
@@ -114,7 +115,6 @@ public class Course {
     }
 
 
-
     public int addGrade(Grade grade)
     {
         int id = gradesId;
@@ -126,7 +126,54 @@ public class Course {
         return id;
     }
 
-    public int addGrade(Grade grade, int studentIndex)
+    public boolean checkGrade(int gradeId, int studentIndex)
+    {
+        Optional<Grade> match
+                = grades.stream()
+                .filter(g -> g.getId()== gradeId)
+                .findFirst();
+
+        if (match.isPresent())
+        {
+            if (match.get().getStudentIndex()==studentIndex)
+            return true;
+            else return false;
+        }
+        else return false;
+    }
+
+    public boolean removeGrade(int removedId)
+    {
+        Optional<Grade> match
+                = grades.stream()
+                .filter(g -> g.getId()== removedId)
+                .findFirst();
+
+        if (match.isPresent())
+        {
+            grades.remove(match.get());
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean updateGrade(Grade grade)
+    {
+        Optional<Grade> match
+                = grades.stream()
+                .filter(g -> g.getId()== grade.getId())
+                .findFirst();
+
+        if (match.isPresent())
+        {
+            grades.remove(match.get());
+            grades.add(grade);
+            return true;
+        }
+        else return false;
+    }
+
+ /*   public int addGrade(Grade grade, int studentIndex)
     {
         int id = gradesId;
         gradesId++;
@@ -136,7 +183,7 @@ public class Course {
         grades.add(grade);
 
         return id;
-    }
+    }*/
 
     @Override
     public String toString()

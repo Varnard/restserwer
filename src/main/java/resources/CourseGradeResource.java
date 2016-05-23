@@ -79,91 +79,88 @@ public class CourseGradeResource {
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteGrade(@PathParam("courseName") String courseName, @PathParam("id") int id)
+    @POST
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
+    public Response addGrade(@PathParam("courseName") String courseName, Grade grade)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        Course found = datastore.find(Course.class, "courseName =", courseName).get();
-
-        if (found==null)
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
+        if (foundCourse!=null)
         {
-            throw new NotFoundException();
-        }
-
-        Optional<Grade> match
-                = found.getGrades().stream()
-                .filter(g -> g.getId()== id)
-                .findFirst();
-
-        if (match.isPresent())
-        {
-            String result = "Grade removed";
-            found.getGrades().remove(match.get());
-            datastore.save(found);
-            return Response.ok().entity(result).build();
+            int id = foundCourse.addGrade(grade);
+            datastore.save(foundCourse);
+            return Response.created(URI.create("/courses/" + courseName + "/grades/" + id)).build();
         }
         else
         {
-            String result = "Grade not found";
+            String result = "Course not found";
             return Response.status(404).entity(result).build();
         }
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addGrade(@PathParam("courseName") String courseName, Grade grade)
-    {
-
-        final Morphia morphia = new Morphia();
-        final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
-
-        Course found = datastore.find(Course.class, "courseName =", courseName).get();
-
-        if (found!=null)
-        {
-            int id = found.addGrade(grade);
-            datastore.save(found);
-            return Response.created(URI.create("courses/" + courseName + "/grades/" + id)).build();
-        }
-        else throw new NotFoundException();
-
 
     }
 
     @PUT
     @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public Response setStudent(@PathParam("courseName") String courseName, @PathParam("id") int id, Grade grade)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        Course found = datastore.find(Course.class, "courseName =", courseName).get();
-
-        if (found==null)
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
+        if (foundCourse!=null)
         {
-            throw new NotFoundException();
+            if (foundCourse.updateGrade(grade))
+            {
+                datastore.save(foundCourse);
+                String result = "Grade updated";
+                return Response.status(200).entity(result).build();
+            }
+            else
+            {
+                String result = "Grade not found";
+                return Response.status(404).entity(result).build();
+            }
         }
-
-        Optional<Grade> match
-                = found.getGrades().stream()
-                .filter(g -> g.getId()== id)
-                .findFirst();
-
-        if (match.isPresent())
+        else
         {
-            found.getGrades().remove(match.get());
+            String result = "Course not found";
+            return Response.status(404).entity(result).build();
         }
-
-        found.getGrades().add(grade);
-        datastore.save(found);
-        String result = "Grade updated";
-        return Response.status(201).entity(result).build();
-
     }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteGrade(@PathParam("index") int index, @PathParam("courseName") String courseName, @PathParam("id") int id)
+    {
+        final Morphia morphia = new Morphia();
+        final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
+
+        Course foundCourse = datastore.find(Course.class, "courseName =", courseName).get();
+        if (foundCourse!=null)
+        {
+            if (foundCourse.removeGrade(id))
+            {
+                datastore.save(foundCourse);
+                String result = "Grade deleted";
+                return Response.status(200).entity(result).build();
+            }
+            else
+            {
+                String result = "Grade not found";
+                return Response.status(404).entity(result).build();
+            }
+        }
+        else
+        {
+            String result = "Course not found";
+            return Response.status(404).entity(result).build();
+        }
+    }
+
+
 
 }
