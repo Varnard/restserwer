@@ -3,24 +3,198 @@
     <head>
         <title>TPSI-HTML</title>
         <link rel="shortcut icon" href="favicon.ico" />
+        
+         <meta charset="UTF-8"> 
+        
+        <style>
+            body
+            {
+                background-color: #efefff;
+                height: 80%;                
+            }
+            footer
+            {
+                background-color: white;
+                border-top: 1px solid black;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                padding-bottom: 10px;
+            }
+            table 
+            {
+                border: 2px solid #555;
+                width: 50%; 
+                padding: 5px;
+                margin-left: 25%;                
+                
+            }
+            
+            th
+            {
+                align-content: center; 
+                border-bottom: 2px solid black;
+                background-color: white;
+            }
+            
+            
+            tr:nth-child(even) {background-color: #d2d2e2}
+            
+            
+            .tableSelect div 
+            {
+                display: none;               
+            }
+
+            .tableSelect div:target 
+            {
+                display: block;
+            }
+            
+            .buttons
+            {
+                width: auto;
+                border: 1px solid black;
+                background-color: white;
+            }
+        </style>
+        
     </head>
 <body>
- <table border="1" style="width:50%">
-  <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
-  </tr>
-</table> 
-</body>
     
-<footer>
+    
+    
+    <div class="tableSelect">
+        <table class="buttons">
+            <tr>
+            <td>
+                <form action="#students">
+                    <button type="submit">Students</button> 
+                </form>
+            </td>
+            <td>
+                <form action="#courses">
+                    <button type="submit">Courses</button> 
+                </form>
+            </td>
+            <td>
+                <form action="#grades">
+                    <button type="submit">Student grades</button> 
+                </form>
+            </td>
+            </tr>
+        </table>
+
+<div id="students">
+ <table>
+     <tr>
+        <th>Name</th>
+        <th>Last name</th>
+        <th>index</th>
+        <th>Birth date</th>
+    </tr>
+    <tr>
+        <td>
+            <!--<form>
+                <input type="text" value="X">
+            </form>-->
+            X
+        </td>
+        <td>Iksinski</td>
+        <td>1</td>
+        <td>12-05-1994</td>
+    </tr>
+    <tr>
+        <td>Majoran</td>
+        <td>Czonstka</td>
+        <td>2</td>
+        <td>13-08-1937</td>
+    </tr>
+    </table> 
+</div>
+    
+    <div id="courses">
+ <table>
+    <tr>
+        <th>Teacher</th>
+        <th>Course Name</th>
+    </tr>
+    <tr>
+        <td>Albert Heisenberg</td>
+        <td>Physica Extremica</td>
+    </tr>
+     <tr>
+        <td>Heniek wozny</td>
+        <td>Extreme Cleaning</td>
+    </tr>
+    </table> 
+    </div>
+    
+    <div id="grades">
+ <table>
+    <tr>
+        <th>Date</th>
+        <th>Student index</th>
+        <th>Mark</th>
+    </tr>
+    <tr>
+        <td>25-07-2015</td>
+        <td>1</td>
+        <td>3.5</td>
+    </tr>
+     <tr>
+        <td>12-03-2015</td>
+        <td>1</td>
+        <td>3.5</td>
+    </tr>
+     <tr>
+        <td>12-08-2016</td>
+        <td>2</td>
+        <td>4.5</td>
+    </tr>
+      <tr>
+        <td>18-11-2016</td>
+        <td>1</td>
+        <td>3.5</td>
+    </tr>
+     <tr>
+        <td>30-02-2014</td>
+        <td>2</td>
+        <td>2</td>
+    </tr>
+    </table> 
+    </div>
+</div>
+    <table class="buttons">
+            <tr>
+            <td>
+                <form>
+                    <button type="submit">Add</button> 
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button type="submit">Edit</button> 
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button type="submit">Delete</button> 
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button type="submit">Details</button> 
+                </form>
+            </td>
+            </tr>
+        </table>    
+          
+  
+    
+    <footer>
     <p>Autor: Maciej Buzalski</p>
   <a href="http://www.put.poznan.pl/">Politechnika Poznanska</a>
-</footer> 
+    </footer> 
+</body> 
 </html>
