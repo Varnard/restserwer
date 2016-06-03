@@ -32,7 +32,6 @@
             
             th
             {
-                align-content: center; 
                 border-bottom: 2px solid black;
                 background-color: white;
             }
@@ -88,27 +87,74 @@
 <div id="students">
  <table>
      <tr>
-        <th>Name</th>
-        <th>Last name</th>
-        <th>index</th>
-        <th>Birth date</th>
+        <th>
+            Name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Last Name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+         <th>
+            Index
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
+         <th>
+            Birth date
+            <form>
+                <input type="date">
+            </form>
+         </th>
     </tr>
     <tr>
         <td>
-            <!--<form>
-                <input type="text" value="X">
-            </form>-->
-            X
+            <form>
+                <input type="text" value="X" placeholder="First name" required>
+            </form>
         </td>
-        <td>Iksinski</td>
-        <td>1</td>
-        <td>12-05-1994</td>
+        <td>
+            <form>
+                <input type="text" value="Iksinski" placeholder="Last name" required>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="date" value="1993-07-12">
+            </form>
+        </td>
     </tr>
     <tr>
-        <td>Majoran</td>
-        <td>Czonstka</td>
-        <td>2</td>
-        <td>13-08-1937</td>
+        <td>
+            <form>
+                <input type="text" value="Majoran" placeholder="First name" required>
+            </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Czonstka" placeholder="Last name" required>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="date" value="1994-03-21">
+            </form>
+        </td>
     </tr>
     </table> 
 </div>
@@ -116,16 +162,42 @@
     <div id="courses">
  <table>
     <tr>
-        <th>Teacher</th>
-        <th>Course Name</th>
+        <th>
+            Teacher name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Course name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
     </tr>
     <tr>
-        <td>Albert Heisenberg</td>
-        <td>Physica Extremica</td>
+        <td>
+            <form>
+                <input type="text" value="Albert Heisenberg" placeholder="Teacher name">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Physica Extremica" placeholder="Course name" required>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>Heniek wozny</td>
-        <td>Extreme Cleaning</td>
+        <td>
+            <form>
+                <input type="text" value="Henryk Wozny" placeholder="Teacher name">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Extreme Cleaning" placeholder="Course name" required>
+           </form>
+        </td>
     </tr>
     </table> 
     </div>
@@ -133,34 +205,145 @@
     <div id="grades">
  <table>
     <tr>
-        <th>Date</th>
-        <th>Student index</th>
-        <th>Mark</th>
+        <th>
+            Date
+            <form>
+                <input type="date">
+            </form>
+         </th>
+        <th>
+            Index
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Mark
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
     </tr>
     <tr>
-        <td>25-07-2015</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-08-11">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>12-03-2015</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-08-27">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>12-08-2016</td>
-        <td>2</td>
-        <td>4.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-02-22">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
       <tr>
-        <td>18-11-2016</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-11-01">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>30-02-2014</td>
-        <td>2</td>
-        <td>2</td>
+        <td>
+            <form>
+                <input type="date" value="2016-06-21">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
     </table> 
     </div>
