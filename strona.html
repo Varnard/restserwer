@@ -3,89 +3,35 @@
     <head>
         <title>TPSI-HTML</title>
         <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" href="stajl.css">
         
          <meta charset="UTF-8"> 
+         <meta name="viewport" content="width=600, initial-scale=2">
         
-        <style>
-            body
-            {
-                background-color: #efefff;
-                height: 80%;                
-            }
-            footer
-            {
-                background-color: white;
-                border-top: 1px solid black;
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                padding-bottom: 10px;
-            }
-            table 
-            {
-                border: 2px solid #555;
-                width: 50%; 
-                padding: 5px;
-                margin-left: 25%;                
-                
-            }
-            
-            th
-            {
-                border-bottom: 2px solid black;
-                background-color: white;
-            }
-            
-            
-            tr:nth-child(even) {background-color: #d2d2e2}
-            
-            
-            .tableSelect div 
-            {
-                display: none;               
-            }
-
-            .tableSelect div:target 
-            {
-                display: block;
-            }
-            
-            .buttons
-            {
-                width: auto;
-                border: 1px solid black;
-                background-color: white;
-            }
-        </style>
         
     </head>
-<body>
+<body>    
     
+    <div class="header">
+    <img src="logo_pp100b.png" alt="logo" />
+        <h1>TPSI Student Grades</h1>
+    </div>
     
+        
+<div class="tableSelect">
+        <nav class="menu">
+        <ul>
+            <li><a href="#students">Students</a></li> 
+            <li><a href="#courses">Courses</a></li> 
+            <li><a href="#grades">Student grades</a></li> 
+        </ul>
+        </nav>
     
-    <div class="tableSelect">
-        <table class="buttons">
-            <tr>
-            <td>
-                <form action="#students">
-                    <button type="submit">Students</button> 
-                </form>
-            </td>
-            <td>
-                <form action="#courses">
-                    <button type="submit">Courses</button> 
-                </form>
-            </td>
-            <td>
-                <form action="#grades">
-                    <button type="submit">Student grades</button> 
-                </form>
-            </td>
-            </tr>
-        </table>
-
 <div id="students">
- <table>
+<h2>Students:</h2>
+<article>
+    <p class="description">Table 1: List of students.</p>
+ <table class="data">
      <tr>
         <th>
             Name
@@ -156,11 +102,23 @@
             </form>
         </td>
     </tr>
-    </table> 
+    </table>
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>    
+    </article>
 </div>
     
     <div id="courses">
- <table>
+    <h2>Courses:</h2>
+<article>
+    <p class="description">Table 1: List of courses.</p>
+ <table class="data">
     <tr>
         <th>
             Teacher name
@@ -200,10 +158,25 @@
         </td>
     </tr>
     </table> 
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>
+    <div class="description">
+        Course list.
+    </div>
+        </article>
     </div>
     
     <div id="grades">
- <table>
+    <h2>Grades:</h2>
+<article>
+    <p class="description">Table 1: List of grades.</p>
+ <table class="data">
     <tr>
         <th>
             Date
@@ -345,33 +318,24 @@
            </form>
         </td>
     </tr>
-    </table> 
+     
+    </table>
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>
+        </article>
+        <div class="description">
+        Student grades list.
+        </div>
     </div>
-</div>
-    <table class="buttons">
-            <tr>
-            <td>
-                <form>
-                    <button type="submit">Add</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Edit</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Delete</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Details</button> 
-                </form>
-            </td>
-            </tr>
-        </table>    
+    </div>
+
+        
           
   
     
