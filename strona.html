@@ -3,192 +3,339 @@
     <head>
         <title>TPSI-HTML</title>
         <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" href="stajl.css">
         
          <meta charset="UTF-8"> 
+         <meta name="viewport" content="width=600, initial-scale=2">
         
-        <style>
-            body
-            {
-                background-color: #efefff;
-                height: 80%;                
-            }
-            footer
-            {
-                background-color: white;
-                border-top: 1px solid black;
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                padding-bottom: 10px;
-            }
-            table 
-            {
-                border: 2px solid #555;
-                width: 50%; 
-                padding: 5px;
-                margin-left: 25%;                
-                
-            }
-            
-            th
-            {
-                align-content: center; 
-                border-bottom: 2px solid black;
-                background-color: white;
-            }
-            
-            
-            tr:nth-child(even) {background-color: #d2d2e2}
-            
-            
-            .tableSelect div 
-            {
-                display: none;               
-            }
-
-            .tableSelect div:target 
-            {
-                display: block;
-            }
-            
-            .buttons
-            {
-                width: auto;
-                border: 1px solid black;
-                background-color: white;
-            }
-        </style>
         
     </head>
-<body>
+<body>    
     
+    <div class="header">
+    <img src="logo_pp100b.png" alt="logo" />
+        <h1>TPSI Student Grades</h1>
+    </div>
     
+        
+<div class="tableSelect">
+        <nav class="menu">
+        <ul>
+            <li><a href="#students">Students</a></li> 
+            <li><a href="#courses">Courses</a></li> 
+            <li><a href="#grades">Student grades</a></li> 
+        </ul>
+        </nav>
     
-    <div class="tableSelect">
-        <table class="buttons">
-            <tr>
-            <td>
-                <form action="#students">
-                    <button type="submit">Students</button> 
-                </form>
-            </td>
-            <td>
-                <form action="#courses">
-                    <button type="submit">Courses</button> 
-                </form>
-            </td>
-            <td>
-                <form action="#grades">
-                    <button type="submit">Student grades</button> 
-                </form>
-            </td>
-            </tr>
-        </table>
-
 <div id="students">
- <table>
+<h2>Students:</h2>
+<article>
+    <p class="description">Table 1: List of students.</p>
+ <table class="data">
      <tr>
-        <th>Name</th>
-        <th>Last name</th>
-        <th>index</th>
-        <th>Birth date</th>
+        <th>
+            Name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Last Name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+         <th>
+            Index
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
+         <th>
+            Birth date
+            <form>
+                <input type="date">
+            </form>
+         </th>
     </tr>
     <tr>
         <td>
-            <!--<form>
-                <input type="text" value="X">
-            </form>-->
-            X
+            <form>
+                <input type="text" value="X" placeholder="First name" required>
+            </form>
         </td>
-        <td>Iksinski</td>
-        <td>1</td>
-        <td>12-05-1994</td>
+        <td>
+            <form>
+                <input type="text" value="Iksinski" placeholder="Last name" required>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="date" value="1993-07-12">
+            </form>
+        </td>
     </tr>
     <tr>
-        <td>Majoran</td>
-        <td>Czonstka</td>
-        <td>2</td>
-        <td>13-08-1937</td>
+        <td>
+            <form>
+                <input type="text" value="Majoran" placeholder="First name" required>
+            </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Czonstka" placeholder="Last name" required>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="date" value="1994-03-21">
+            </form>
+        </td>
     </tr>
-    </table> 
+    </table>
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>    
+    </article>
 </div>
     
     <div id="courses">
- <table>
+    <h2>Courses:</h2>
+<article>
+    <p class="description">Table 1: List of courses.</p>
+ <table class="data">
     <tr>
-        <th>Teacher</th>
-        <th>Course Name</th>
+        <th>
+            Teacher name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Course name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
     </tr>
     <tr>
-        <td>Albert Heisenberg</td>
-        <td>Physica Extremica</td>
+        <td>
+            <form>
+                <input type="text" value="Albert Heisenberg" placeholder="Teacher name">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Physica Extremica" placeholder="Course name" required>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>Heniek wozny</td>
-        <td>Extreme Cleaning</td>
+        <td>
+            <form>
+                <input type="text" value="Henryk Wozny" placeholder="Teacher name">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" value="Extreme Cleaning" placeholder="Course name" required>
+           </form>
+        </td>
     </tr>
     </table> 
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>
+    <div class="description">
+        Course list.
+    </div>
+        </article>
     </div>
     
     <div id="grades">
- <table>
+    <h2>Grades:</h2>
+<article>
+    <p class="description">Table 1: List of grades.</p>
+ <table class="data">
     <tr>
-        <th>Date</th>
-        <th>Student index</th>
-        <th>Mark</th>
+        <th>
+            Date
+            <form>
+                <input type="date">
+            </form>
+         </th>
+        <th>
+            Index
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Mark
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
     </tr>
     <tr>
-        <td>25-07-2015</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-08-11">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>12-03-2015</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-08-27">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>12-08-2016</td>
-        <td>2</td>
-        <td>4.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-02-22">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="1" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
       <tr>
-        <td>18-11-2016</td>
-        <td>1</td>
-        <td>3.5</td>
+        <td>
+            <form>
+                <input type="date" value="2015-11-01">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
      <tr>
-        <td>30-02-2014</td>
-        <td>2</td>
-        <td>2</td>
+        <td>
+            <form>
+                <input type="date" value="2016-06-21">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="number" value="2" readonly>
+           </form>
+        </td>
+        <td>
+            <form>
+                <select>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
     </tr>
-    </table> 
+     
+    </table>
+            <nav class="actions">
+        <ul>
+            <li><a href="">Add</a></li> 
+            <li><a href="">Edit</a></li> 
+            <li><a href="">Delete</a></li> 
+            <li><a href="">Details</a></li> 
+        </ul>
+        </nav>
+        </article>
+        <div class="description">
+        Student grades list.
+        </div>
     </div>
-</div>
-    <table class="buttons">
-            <tr>
-            <td>
-                <form>
-                    <button type="submit">Add</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Edit</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Delete</button> 
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button type="submit">Details</button> 
-                </form>
-            </td>
-            </tr>
-        </table>    
+    </div>
+
+        
           
   
     
