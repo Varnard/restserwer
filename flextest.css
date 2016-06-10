@@ -1,0 +1,119 @@
+body
+{
+    
+background-color: #AB9EFF;
+    height: 80%;  
+    padding: 0px;
+    color: #35297F;
+    margin: 0px;
+    font-family: "Arial", sans-serif;
+    font-style: normal;
+    font-size: 1em; 
+}
+
+h1
+{
+    font-family: "Helvetica Neue";
+    font-style: italic;
+    font-size: 2em;
+}
+
+h2
+{
+    font-family: "Helvetica Neue";
+    font-style: italic;
+    font-size: 1.5em;
+}
+
+footer
+{
+    background: linear-gradient(to right,#5441CC,#564F7F);
+    border-top: 1px solid #35297F;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    padding: 0px 0px 0px 10px;
+    color: white;
+}
+
+footer a
+{
+    text-decoration: none;
+    color:  #AB9EFF;
+}
+
+footer a:hover
+{
+    text-decoration: underline;
+    color: white;
+}
+
+
+header
+{
+    background: linear-gradient(to right,#5441CC,#564F7F);
+    border-bottom: 8px solid #35297F;
+    color: white;
+    padding: 5px;
+}
+
+
+.menu ul
+{
+    border: 0px;
+    border-bottom: 2px solid #35297F;
+    border-right: 2px solid #35297F;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #6951FF;
+    border: 2px solid #35297F;    
+}
+
+li a 
+{
+    display: block;
+    color: white;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+li a:hover 
+{
+    background-color: #AB9EFF;
+    color: #35297F;
+}
+
+nav
+{
+    display: flex;
+    flex: 1; 
+    width:900px;
+    
+}
+
+
+section
+{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+
+section h2
+{
+    width: 10%;
+    flex:100;
+}
+
+section h3
+{
+    width: 10%;
+        flex:1;
+}
+
