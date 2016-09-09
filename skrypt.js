@@ -2,24 +2,26 @@
 
 var oArray = ko.observableArray();
 
-/*var studentModel = function() {
-    this.name = ko.observable('Bob');
-    this.lastName = ko.observable('123');
-    this.index = ko.observable(5);
-    this.birthdate = ko.observable('12-05-1994');
-};*/
+var studentModel = function() {
+    this.name = ko.observable('nameasdf');
+    this.lastName = ko.observable('lastnameqwerty');
+    this.index = ko.observable(0);
+    this.birthdate = ko.observable('01-01-1901');
+};
 
-var studentModel = {
+var student1 = new studentModel();
+var student2 = new studentModel();
+
+var tab = [student1,student2];
+
+var studentModel2 = {
     name: ko.observable('Bobt'),
     lastName: ko.observable('123'),
     index: ko.observable(5),
     birthdate: ko.observable('12-05-1994')
 };
 
-oArray.push(studentModel);
-
-ko.applyBindings(oArray);
-//ko.applyBindings(studentModel2);
+ko.applyBindings(tab);
 
 var studentsUrl = "http://localhost:8080/students/";
 
