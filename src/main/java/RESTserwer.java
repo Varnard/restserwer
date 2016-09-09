@@ -22,6 +22,7 @@ public class RESTserwer {
         final ResourceConfig rc = new ResourceConfig(StudentResource.class, CourseResource.class,
                 StudentGradeResource.class, CourseListResource.class, CourseGradeResource.class);
         rc.packages("org.glassfish.jersey.examples.linking").register(DeclarativeLinkingFeature.class);
+        rc.register(CustomHeaders.class);
         //rc.register(DateParamConverterProvider.class);
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

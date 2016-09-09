@@ -15,6 +15,7 @@
     <div class="header">
     <img src="logo_pp100b.png" alt="logo" />
         <h1>TPSI Student Grades</h1>
+        The name is <span data-bind="foreach: oArray"><span data-bind="text: $studentModel.name"></span></span>
     </div>
     
         
@@ -31,7 +32,7 @@
 <h2>Students:</h2>
 <article>
     <p class="description">Table 1: List of students.</p>
- <table class="data">
+ <table class="data" id="studentsTable">
      <tr>
         <th>
             Name
@@ -342,6 +343,10 @@
     <footer>
     <p>Autor: Maciej Buzalski</p>
   <a href="http://www.put.poznan.pl/">Politechnika Poznanska</a>
-    </footer> 
+    </footer>
+    <script type="text/javascript" src="jquery-3.1.0.js"></script>
+    <script type="text/javascript" src="knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="knockout.mapping.js"></script>
+    <script type="text/javascript" src="skrypt.js"></script>
 </body> 
 </html>
