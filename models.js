@@ -46,27 +46,6 @@ ko.applyBindings(studentTable);
 ko.applyBindings(courseTable);
 ko.applyBindings(gradeTable);
 
-var studentsUrl = "http://localhost:8080/students/";
-
-var resource;
-
-function get() {
-    
-var settings = {
-  "url": "http://localhost:8080/students",
-  "method": "GET",
-  "headers": {
-    "accept": "application/json"
-  },
-  "data": ""
-}
-
-$.ajax(settings).done(function (response) {
- resource=response;
-});
-    
-}
-
 function addStudent(){
     studentTable.push(new studentModel())
 }
@@ -78,4 +57,3 @@ function addCourse(){
 function addGrade(){
     gradeTable.push(new gradeModel())
 }
-
