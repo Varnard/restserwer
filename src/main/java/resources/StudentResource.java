@@ -36,9 +36,9 @@ public class StudentResource {
             try {
                 if (    (studentName.equals("") || s.getName().equals(studentName)) &&
                         (studentLastName.equals("") || s.getLastName().equals(studentLastName)) &&
-                        s.getBirthDate().after(sdf.parse(bDateAfter)) &&
-                        s.getBirthDate().before(sdf.parse(bDateBefore)) &&
-                        (bDate.equals("") || s.getBirthDate().equals(sdf.parse(bDate))))
+                        s.getBirthdate().after(sdf.parse(bDateAfter)) &&
+                        s.getBirthdate().before(sdf.parse(bDateBefore)) &&
+                        (bDate.equals("") || s.getBirthdate().equals(sdf.parse(bDate))))
                 {
                     list.add(s);
                 }

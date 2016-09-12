@@ -1,17 +1,41 @@
 "use strict";
+    
+var studentsURL = "http://localhost:8080/students";
 
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost:8080/students",
-  "method": "GET",
-  "headers": {
-    "accept": "application/json",
-    "cache-control": "no-cache",
-    "postman-token": "f93b5045-a63f-3db8-22dc-0674c255eaac"
-  }
+var coursesURL = "http://localhost:8080/courses";
+
+var getStudents = function(){
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": studentsURL,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        studentTable(ko.mapping.fromJS(response)());
+        studentTable().forEach(function(item){
+            alert(item.name())//.subscribe(function(){alert("xd")}))         
+                  });
+    });
 }
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+
+var getCourses = function(){
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": coursesURL,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        courseTable(ko.mapping.fromJS(response)());
+    });
+}

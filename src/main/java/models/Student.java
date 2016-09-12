@@ -40,7 +40,7 @@ public class Student {
     private int index;
 
     @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="dd-MM-yyyy",timezone="CET")
-    private Date birthDate;
+    private Date birthdate;
 
     @Reference
     @InjectLinkNoFollow
@@ -48,7 +48,7 @@ public class Student {
 
     public Student(){}
 
-    public Student(String name, String lastName, int index, String birthDate) {
+    public Student(String name, String lastName, int index, String birthdate) {
         this.name = name;
         this.lastName = lastName;
         this.index = index;
@@ -57,7 +57,7 @@ public class Student {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
         try
         {
-            this.birthDate = sdf.parse(birthDate);
+            this.birthdate = sdf.parse(birthdate);
         }
         catch (Exception e)
         {
@@ -95,12 +95,12 @@ public class Student {
     }
 
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     @XmlTransient
@@ -155,7 +155,7 @@ public class Student {
         String student="Name: " + name + "\n"
                      + "Last name: " + lastName + "\n"
                      + "Index: " + index + "\n"
-                     + "Born: " + birthDate + "\n";
+                     + "Born: " + birthdate + "\n";
         return student;
     }
 

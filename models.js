@@ -1,7 +1,5 @@
 "use strict";
 
-var oArray = ko.observableArray();
-
 var studentModel = function() {
     this.name = ko.observable('');
     this.lastName = ko.observable('');
@@ -11,7 +9,7 @@ var studentModel = function() {
 
 var courseModel = function() {
     this.courseName = ko.observable('');
-    this.teacherName = ko.observable('');
+    this.teacher = ko.observable('');
 }
 
 var gradeModel = function() {
@@ -42,9 +40,6 @@ var gradeTable = ko.observableArray();
 gradeTable.push(grade1);
 gradeTable.push(grade2);
 
-ko.applyBindings(studentTable);
-ko.applyBindings(courseTable);
-ko.applyBindings(gradeTable);
 
 function addStudent(){
     studentTable.push(new studentModel())
@@ -57,3 +52,9 @@ function addCourse(){
 function addGrade(){
     gradeTable.push(new gradeModel())
 }
+
+//gradeModel.mark.subscribe(function(newValue) {
+//    //alert("new Grade: " + newValue);
+//});
+
+

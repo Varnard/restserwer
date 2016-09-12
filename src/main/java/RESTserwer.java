@@ -19,7 +19,7 @@ public class RESTserwer {
 
     public static HttpServer startServer() {
 
-        final ResourceConfig rc = new ResourceConfig(StudentResource.class, CourseResource.class,
+        ResourceConfig rc = new ResourceConfig(StudentResource.class, CourseResource.class,
                 StudentGradeResource.class, CourseListResource.class, CourseGradeResource.class);
         rc.packages("org.glassfish.jersey.examples.linking").register(DeclarativeLinkingFeature.class);
         rc.register(CustomHeaders.class);
