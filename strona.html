@@ -32,6 +32,7 @@
 <article>
     <p class="description">Table 1: List of students.</p>
  <table class="data" id="studentsTable">
+     <thead>
      <tr>
         <th>
             Name
@@ -58,7 +59,8 @@
             </form>
          </th>
     </tr>
-     <span data-bind="foreach: tab">
+     </thead>
+     <tbody data-bind="foreach: studentTable">
     <tr>
         <td>
             <form>
@@ -67,21 +69,21 @@
         </td>
         <td>
             <form>
-                <input type="text" value="Iksinski" placeholder="Last name" required>
+                <input type="text" data-bind="value: lastName" placeholder="Last name" required>
            </form>
         </td>
         <td>
             <form>
-                <input type="number" value="1" readonly>
+                <input type="number" data-bind="value: index" readonly>
            </form>
         </td>
         <td>
             <form>
-                <input type="date" value="1993-07-12">
+                <input type="date" data-bind="value: birthdate">
             </form>
         </td>
-    </tr>
-    </span>    
+    </tr>   
+    </tbody>
     </table>
             <nav class="actions">
         <ul>
@@ -99,6 +101,7 @@
 <article>
     <p class="description">Table 1: List of courses.</p>
  <table class="data">
+     <thead>
     <tr>
         <th>
             Teacher name
@@ -113,30 +116,21 @@
             </form>
          </th>
     </tr>
-    <tr>
-        <td>
-            <form>
-                <input type="text" value="Albert Heisenberg" placeholder="Teacher name">
-           </form>
-        </td>
-        <td>
-            <form>
-                <input type="text" value="Physica Extremica" placeholder="Course name" required>
-           </form>
-        </td>
-    </tr>
+     </thead>
+     <tbody data-bind="foreach: courseTable">
      <tr>
         <td>
             <form>
-                <input type="text" value="Henryk Wozny" placeholder="Teacher name">
+                <input type="text" data-bind="value: teacherName" placeholder="Teacher name">
            </form>
         </td>
         <td>
             <form>
-                <input type="text" value="Extreme Cleaning" placeholder="Course name" required>
+                <input type="text" data-bind="value: courseName" placeholder="Course name" required>
            </form>
         </td>
     </tr>
+     </tbody>
     </table> 
             <nav class="actions">
         <ul>
@@ -157,6 +151,7 @@
 <article>
     <p class="description">Table 1: List of grades.</p>
  <table class="data">
+     <thead>
     <tr>
         <th>
             Date
@@ -177,21 +172,23 @@
             </form>
          </th>
     </tr>
+     </thead>
+     <tbody data-bind="foreach: gradeTable">
     <tr>
         <td>
             <form>
-                <input type="date" value="2015-08-11">
+                <input type="date" data-bind="value: date">
            </form>
         </td>
         <td>
             <form>
-                <input type="number" value="1" readonly>
+                <input type="number" data-bind="value: mindex" readonly>
            </form>
 
         </td>
         <td>
             <form>
-                <select>
+                <select data-bind="value: mark">
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="3.5">3.5</option>
@@ -202,103 +199,7 @@
            </form>
         </td>
     </tr>
-     <tr>
-        <td>
-            <form>
-                <input type="date" value="2015-08-27">
-           </form>
-        </td>
-        <td>
-            <form>
-                <input type="number" value="1" readonly>
-           </form>
-        </td>
-        <td>
-            <form>
-                <select>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3.5">3.5</option>
-                    <option value="4">4</option>
-                    <option value="4.5">4.5</option>
-                    <option value="5">5</option>  
-                </select>
-           </form>
-        </td>
-    </tr>
-     <tr>
-        <td>
-            <form>
-                <input type="date" value="2015-02-22">
-           </form>
-        </td>
-        <td>
-            <form>
-                <input type="number" value="1" readonly>
-           </form>
-        </td>
-        <td>
-            <form>
-                <select>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3.5">3.5</option>
-                    <option value="4">4</option>
-                    <option value="4.5">4.5</option>
-                    <option value="5">5</option>  
-                </select>
-           </form>
-        </td>
-    </tr>
-      <tr>
-        <td>
-            <form>
-                <input type="date" value="2015-11-01">
-           </form>
-        </td>
-        <td>
-            <form>
-                <input type="number" value="2" readonly>
-           </form>
-        </td>
-        <td>
-            <form>
-                <select>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3.5">3.5</option>
-                    <option value="4">4</option>
-                    <option value="4.5">4.5</option>
-                    <option value="5">5</option>  
-                </select>
-           </form>
-        </td>
-    </tr>
-     <tr>
-        <td>
-            <form>
-                <input type="date" value="2016-06-21">
-           </form>
-        </td>
-        <td>
-            <form>
-                <input type="number" value="2" readonly>
-           </form>
-        </td>
-        <td>
-            <form>
-                <select>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3.5">3.5</option>
-                    <option value="4">4</option>
-                    <option value="4.5">4.5</option>
-                    <option value="5">5</option>  
-                </select>
-           </form>
-        </td>
-    </tr>
-     
+     </tbody>
     </table>
             <nav class="actions">
         <ul>
@@ -325,7 +226,7 @@
     </footer>
     <script type="text/javascript" src="jquery-3.1.0.js"></script>
     <script type="text/javascript" src="knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="knockout.mapping.js"></script>
+    <script type="text/javascript" src="knockout-mapping.js"></script>
     <script type="text/javascript" src="skrypt.js"></script>
 </body> 
 </html>
