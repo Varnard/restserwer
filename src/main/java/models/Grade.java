@@ -41,7 +41,7 @@ public class Grade {
     private int studentIndex;
     private double mark;
 
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="dd-MM-yyyy",timezone="CET")
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
     private Date date;
 
     private int id;
@@ -51,7 +51,7 @@ public class Grade {
     public Grade(double mark, String date) {
         this.mark = mark;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
             this.date = sdf.parse(date);

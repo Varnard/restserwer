@@ -39,7 +39,7 @@ public class Student {
     @Id
     private int index;
 
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="dd-MM-yyyy",timezone="CET")
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="CET")
     private Date birthdate;
 
     @Reference
@@ -54,7 +54,7 @@ public class Student {
         this.index = index;
         this.courseList=new ArrayList<>();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
             this.birthdate = sdf.parse(birthdate);

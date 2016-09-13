@@ -51,8 +51,8 @@ public class RESTserwer {
         Course Physics2 = new Course("Albert Heisenberg", "Physics2");
         Course Spanish = new Course("Senor Spaniard","Spanish");
 
-        Student one = new Student("One", "First", 1 , "05-12-1994");
-        Student two = new Student("Two", "Second", 2 ,"02-02-1995");
+        Student one = new Student("One", "First", 1 , "1994-12-05");
+        Student two = new Student("Two", "Second", 2 ,"1995-02-02");
 
         one.addCourse(English);
         one.addCourse(Math);
@@ -61,28 +61,28 @@ public class RESTserwer {
         two.addCourse(Physics);
         two.addCourse(Math);
 
-        one.addGrade(new Grade(3.5,"10-03-2014"), "English");
-        one.addGrade(new Grade(3.0,"11-03-2014"), "English");
+        one.addGrade(new Grade(3.5,"2014-03-10"), "English");
+        one.addGrade(new Grade(3.0,"2014-03-11"), "English");
         one.addGrade(new Grade(4.0,"21-04-2014"), "English");
 
-        one.addGrade(new Grade(4.5,"20-03-2013"), "Math");
-        one.addGrade(new Grade(3.5,"05-03-2013"), "Math");
-        one.addGrade(new Grade(4.5,"24-06-2013"), "Math");
-        one.addGrade(new Grade(5.0,"17-05-2013"), "Math");
+        one.addGrade(new Grade(4.5,"2013-03-20"), "Math");
+        one.addGrade(new Grade(3.5,"2013-03-05"), "Math");
+        one.addGrade(new Grade(4.5,"2013-06-24"), "Math");
+        one.addGrade(new Grade(5.0,"2013-05-17"), "Math");
 
-        two.addGrade(new Grade(2.0,"20-03-2014"), "Spanish");
-        two.addGrade(new Grade(3.0,"31-02-2014"), "Spanish");
-        two.addGrade(new Grade(2.0,"01-03-2014"), "Spanish");
+        two.addGrade(new Grade(2.0,"2014-03-20"), "Spanish");
+        two.addGrade(new Grade(3.0,"2014-02-31"), "Spanish");
+        two.addGrade(new Grade(2.0,"2014-03-01"), "Spanish");
 
-        two.addGrade(new Grade(4.0,"26-03-2013"), "Physics");
-        two.addGrade(new Grade(3.5,"15-03-2013"), "Physics");
-        two.addGrade(new Grade(4.5,"04-06-2013"), "Physics");
-        two.addGrade(new Grade(5.0,"27-05-2013"), "Physics");
+        two.addGrade(new Grade(4.0,"2013-03-26"), "Physics");
+        two.addGrade(new Grade(3.5,"2013-03-15"), "Physics");
+        two.addGrade(new Grade(4.5,"2013-06-04"), "Physics");
+        two.addGrade(new Grade(5.0,"2013-05-27"), "Physics");
 
-        two.addGrade(new Grade(5.0,"28-04-2013"), "Math");
-        two.addGrade(new Grade(3.5,"06-03-2013"), "Math");
-        two.addGrade(new Grade(4.0,"17-04-2013"), "Math");
-        two.addGrade(new Grade(5.0,"09-05-2013"), "Math");
+        two.addGrade(new Grade(5.0,"2013-04-28"), "Math");
+        two.addGrade(new Grade(3.5,"2013-03-06"), "Math");
+        two.addGrade(new Grade(4.0,"2013-04-17"), "Math");
+        two.addGrade(new Grade(5.0,"2013-05-09"), "Math");
 
         if (datastore.getCount(Student.class)>0 || datastore.getCount(Course.class)>0)
         {

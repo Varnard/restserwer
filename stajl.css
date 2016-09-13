@@ -85,6 +85,11 @@ input[type=number]
     margin: 0; 
 }
 
+input[type=date] 
+{
+    width: 125px;
+}
+
 table select
 {
     background-color: #6952FF;  
@@ -104,7 +109,7 @@ th
 
 th input
 {
-   background-color: #6951FF;   
+    background-color: #6951FF;   
     border: 0px;
     color: white;
 }
@@ -182,6 +187,11 @@ table tr:hover select
 [id=courses] table input
 {
    width: 150px;
+}
+
+table tr:pressed input
+{
+    background-color: red;
 }
 
 

@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,32 +22,47 @@ public class StudentResource {
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public List<Student> getAllStudents(@DefaultValue("") @QueryParam("name") String studentName,
                                         @DefaultValue("") @QueryParam("last name") String studentLastName,
-                                        @DefaultValue("01-01-1970") @QueryParam("bornAfter") String bDateAfter,
-                                        @DefaultValue("01-01-2070") @QueryParam("bornBefore") String bDateBefore,
+                                        @DefaultValue("") @QueryParam("bornAfter") String bDateAfter,
+                                        @DefaultValue("") @QueryParam("bornBefore") String bDateBefore,
                                         @DefaultValue("") @QueryParam("born") String bDate)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         List<Student> list = new ArrayList<>();
         for (Student s : datastore.find(Student.class).asList())
         {
-            try {
-                if (    (studentName.equals("") || s.getName().equals(studentName)) &&
-                        (studentLastName.equals("") || s.getLastName().equals(studentLastName)) &&
-                        s.getBirthdate().after(sdf.parse(bDateAfter)) &&
-                        s.getBirthdate().before(sdf.parse(bDateBefore)) &&
-                        (bDate.equals("") || s.getBirthdate().equals(sdf.parse(bDate))))
-                {
-                    list.add(s);
+            boolean result = true;
+            if (!(studentName.equals("") || s.getName().equals(studentName))) result=false;
+            if (!(studentLastName.equals("") || s.getLastName().equals(studentLastName))) result=false;
+            if (!bDateAfter.equals(""))
+            {
+                try {
+                    if (!s.getBirthdate().after(sdf.parse(bDateAfter))) result = false;
+                } catch (ParseException e) {
+                    result=false;
                 }
             }
-            catch (Exception e)
+            if (!bDateBefore.equals(""))
             {
-                e.printStackTrace();
+                try {
+                    if (!s.getBirthdate().before(sdf.parse(bDateBefore))) result = false;
+                } catch (ParseException e) {
+                    result=false;
+                }
             }
+            if (!bDate.equals(""))
+            {
+                try {
+                    if (!s.getBirthdate().equals(sdf.parse(bDate))) result = false;
+                } catch (ParseException e) {
+                    result=false;
+                }
+            }
+
+            if(result)list.add(s);
         }
 
         if (list.isEmpty())throw new NotFoundException();
@@ -127,4 +143,7 @@ public class StudentResource {
             return Response.status(404).entity(result).build();
         }
     }
+
 }
+
+
