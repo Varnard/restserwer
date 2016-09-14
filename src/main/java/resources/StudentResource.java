@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("students")
 public class StudentResource {
@@ -35,8 +36,8 @@ public class StudentResource {
         for (Student s : datastore.find(Student.class).asList())
         {
             boolean result = true;
-            if (!(studentName.equals("") || s.getName().equals(studentName))) result=false;
-            if (!(studentLastName.equals("") || s.getLastName().equals(studentLastName))) result=false;
+            if (s.getName().toLowerCase().contains(studentName.toLowerCase())) result=false;
+            if (s.getLastName().toLowerCase().contains(studentLastName.toLowerCase())) result=false;
             if (!bDateAfter.equals(""))
             {
                 try {
@@ -65,8 +66,11 @@ public class StudentResource {
             if(result)list.add(s);
         }
 
-        if (list.isEmpty())throw new NotFoundException();
-        else return list;
+        /*if (list.isEmpty())throw new NotFoundException();
+        else*/
+            return list.stream()
+                .sorted((s1,s2)->Integer.compare(s1.getIndex(),s2.getIndex()))
+                .collect(Collectors.toList());
     }
 
     @GET
@@ -93,7 +97,12 @@ public class StudentResource {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
 
-        int newIndex = datastore.find(Student.class).order("-index").limit(1).get().getIndex()+1;
+        int newIndex = 1;
+        try {
+            newIndex = datastore.find(Student.class).order("-index").limit(1).get().getIndex()+1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         student.setIndex(newIndex);
 

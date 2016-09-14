@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("courses")
 public class CourseListResource {
@@ -23,7 +24,8 @@ public class CourseListResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public List<Course> getAllCourses(@DefaultValue("") @QueryParam("teacher") String teacherName)
+    public List<Course> getAllCourses(@DefaultValue("") @QueryParam("teacher") String teacherName,
+                                      @DefaultValue("") @QueryParam("courseName") String courseName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -32,7 +34,8 @@ public class CourseListResource {
 
         for (Course c : datastore.find(Course.class).asList())
         {
-            if (teacherName.equals("") || c.getTeacher().equals(teacherName))
+            if (c.getTeacher().toLowerCase().contains(teacherName.toLowerCase()) &&
+                    c.getCourseName().toLowerCase().contains(courseName.toLowerCase()))
             {
                 c.setStudentPath("false");
                 c.setCoursePath("true");
@@ -41,8 +44,11 @@ public class CourseListResource {
 
         }
 
-        if (list.isEmpty())throw new NotFoundException();
-        else return list;
+        /*if (list.isEmpty())throw new NotFoundException();
+        else */
+        return list.stream()
+                .sorted((c1,c2)->new StringComparator().compare(c1.getCourseName(),c2.getCourseName()))
+                .collect(Collectors.toList());
     }
 
     @GET

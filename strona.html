@@ -19,13 +19,12 @@
     
         
 <div class="tableSelect">
-        <nav class="menu">
-        <ul>
-            <li><a href="#students">Students</a></li> 
-            <li><a href="#courses">Courses</a></li> 
-<!--            <li><a href="#grades">Student grades</a></li> -->
-        </ul>
-        </nav>
+    <nav class="menu">
+    <ul>
+        <li><a href="#students" onclick='getStudents();'>Students</a></li> 
+        <li><a href="#courses" onclick='getCourses();'>Courses</a></li> 
+    </ul>
+      </nav>
     
 <div id="students">
 <h2>Students:</h2>
@@ -61,7 +60,7 @@
     </tr>
      </thead>
      <tbody data-bind="foreach: studentTable">
-    <tr>
+    <tr data-bind="click: selectStudent, css: { selectedRow: index()===activeStudent }" >
         <td>
             <form>
                 <input type="text" data-bind="value: name" placeholder="First name" required>
@@ -88,9 +87,8 @@
             <nav class="actions">
         <ul>
             <li><a href="#students" onclick='addStudent();'>Add</a></li> 
-            <li><a href="#students">Edit</a></li> 
-            <li><a href="#students">Delete</a></li> 
-            <li><a href="#students">Details</a></li> 
+            <li><a href="#students" onclick='deleteStudent(activeStudent);'>Delete</a></li> 
+            <li><a href="#studentCourses" onclick='getStudentCourses(activeStudent);'>Details</a></li> 
         </ul>
         </nav>    
     </article>
@@ -118,7 +116,7 @@
     </tr>
      </thead>
      <tbody data-bind="foreach: courseTable">
-     <tr>
+     <tr data-bind="click: selectCourse, css: { selectedRow: courseName()===activeCourse }" >
         <td>
             <form>
                 <input type="text" data-bind="value: teacher" placeholder="Teacher name">
@@ -135,9 +133,57 @@
             <nav class="actions">
         <ul>
             <li><a href="#courses" onclick='addCourse();'>Add</a></li> 
-            <li><a href="#courses">Edit</a></li> 
-            <li><a href="#courses">Delete</a></li> 
-            <li><a href="#courses">Details</a></li> 
+            <li><a href="#courses" onclick='deleteCourse(activeCourse);'>Delete</a></li> 
+            <li><a href="#grades" onclick='getCourseGrades(activeCourse);'>Details</a></li>  
+        </ul>
+        </nav>
+    <div class="description">
+        Course list.
+    </div>
+        </article>
+    </div>
+    
+     <div id="studentCourses">
+    <h2>Courses:</h2>
+<article>
+    <p class="description">Table 1: List of courses.</p>
+ <table class="data">
+     <thead>
+    <tr>
+        <th>
+            Teacher name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+        <th>
+            Course name
+            <form>
+                <input type="text" placeholder="search">
+            </form>
+         </th>
+    </tr>
+     </thead>
+     <tbody data-bind="foreach: courseTable">
+     <tr data-bind="click: selectCourse, css: { selectedRow: courseName()===activeCourse }" >
+        <td>
+            <form>
+                <input type="text" data-bind="value: teacher" placeholder="Teacher name">
+           </form>
+        </td>
+        <td>
+            <form>
+                <input type="text" data-bind="value: courseName" placeholder="Course name" required>
+           </form>
+        </td>
+    </tr>
+     </tbody>
+    </table> 
+            <nav class="actions">
+        <ul>
+            <li><a href="#studentCourses" onclick='addCourse();'>Add</a></li> 
+            <li><a href="#studentCourses" onclick='deleteCourse(activeCourse);'>Delete</a></li> 
+            <li><a href="#studentGrades" onclick='getStudentGrades(activeStudent, activeCourse);'>Details</a></li> 
         </ul>
         </nav>
     <div class="description">
@@ -182,7 +228,7 @@
         </td>
         <td>
             <form>
-                <input type="number" data-bind="value: mindex" readonly>
+                <input type="number" data-bind="value: studentIndex" readonly>
            </form>
 
         </td>
@@ -203,10 +249,61 @@
     </table>
             <nav class="actions">
         <ul>
+            <li><a href="#grades">Delete</a></li>
+        </ul>
+        </nav>
+        </article>
+        <div class="description">
+        Student grades list.
+        </div>
+    </div>
+        <div id="studentGrades">
+    <h2>Grades:</h2>
+<article>
+    <p class="description">Table 1: List of grades.</p>
+ <table class="data">
+     <thead>
+    <tr>
+        <th>
+            Date
+            <form>
+                <input type="date">
+            </form>
+         </th>
+        <th>
+            Mark
+            <form>
+                <input type="number" placeholder="search">
+            </form>
+         </th>
+    </tr>
+     </thead>
+     <tbody data-bind="foreach: gradeTable">
+    <tr>
+        <td>
+            <form>
+                <input type="date" data-bind="value: date">
+           </form>
+        </td>
+        <td>
+            <form>
+                <select data-bind="value: mark">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4">4</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5">5</option>  
+                </select>
+           </form>
+        </td>
+    </tr>
+     </tbody>
+    </table>
+            <nav class="actions">
+        <ul>
             <li><a href="#grades">Add</a></li> 
-            <li><a href="#grades">Edit</a></li> 
-            <li><a href="#grades">Delete</a></li> 
-            <li><a href="#grades">Details</a></li>  
+            <li><a href="#grades">Delete</a></li>  
         </ul>
         </nav>
         </article>

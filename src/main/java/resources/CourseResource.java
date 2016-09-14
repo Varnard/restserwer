@@ -10,15 +10,19 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("students/{index}/courses")
 public class CourseResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
-    public List<Course> getAllCourses(@PathParam("index")int index)
+    public List<Course> getAllCourses(@PathParam("index")int index,
+                                      @DefaultValue("") @QueryParam("teacher") String teacherName,
+                                      @DefaultValue("") @QueryParam("courseName") String courseName)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -27,13 +31,21 @@ public class CourseResource {
 
         if (found!=null)
         {
-            List<Course> list = found.getCourseList();
-            for (Course c : list)
+            List<Course> courses = found.getCourseList();
+            List<Course> list = new ArrayList<>();
+            for (Course c : courses)
             {
-                c.setStudentPath("true");
-                c.setCoursePath("false");
+                if (c.getTeacher().toLowerCase().contains(teacherName.toLowerCase()) &&
+                        c.getCourseName().toLowerCase().contains(courseName.toLowerCase()))
+                {
+                    c.setStudentPath("false");
+                    c.setCoursePath("true");
+                    list.add(c);
+                }
             }
-            return list;
+            return list.stream()
+                    .sorted((c1,c2)->new StringComparator().compare(c1.getCourseName(),c2.getCourseName()))
+                    .collect(Collectors.toList());
         }
         else throw new NotFoundException();
     }

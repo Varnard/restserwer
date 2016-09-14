@@ -189,11 +189,40 @@ table tr:hover select
    width: 150px;
 }
 
-table tr:pressed input
+
+.selectedRow:nth-child(even) td
 {
-    background-color: red;
+    background-color: #D8D2FF;
 }
 
+.selectedRow:nth-child(even) input
+{
+    background-color: #D8D2FF;
+    color: black;
+}
+
+.selectedRow:nth-child(even) select
+{
+    background-color: #D8D2FF;
+    color: black;
+}
+
+.selectedRow td
+{
+    background-color: #D8D2FF;
+}
+
+.selectedRow input
+{
+    background-color: #D8D2FF;
+    color: black;
+}
+
+.selectedRow select
+{
+    background-color: #D8D2FF;
+    color: black;
+}
 
 .header
 {
@@ -276,7 +305,7 @@ article h2
 .actions
 {
     width: 60px;
-    height: 125px;
+    height: 97px;
     display: flex;
     text-align: center;
 }
@@ -284,6 +313,17 @@ article h2
 .actions li a
 {
     padding: 5px;
+    padding-top: 8px;
+}
+
+#studentGrades .actions 
+{
+    height: 66px;
+}
+
+#grades .actions 
+{
+    height: 35px;
 }
 
 @media print
@@ -297,9 +337,6 @@ article h2
     .header
     {
         display: none;
-        /*background: white;
-        color: black;
-        border-color: black;*/
     }
     
     footer

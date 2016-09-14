@@ -23,6 +23,42 @@ var getStudents = function(){
     });
 }
 
+var getStudentCourses = function(index){
+    var path = studentsURL+ index + '/courses/'
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        courseTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
+var getStudentGrades = function(index, courseName){
+    var path = studentsURL+ index + '/courses/' + courseName + '/grades/'
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+       gradeTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
 var updateStudent = function(student) {
     let index = student.index();
     
@@ -67,9 +103,7 @@ $.ajax(settings).done(function (response) {
 });
 }
 
-var deleteStudent = function(student) {
-    let index = student.index();
-
+var deleteStudent = function(index) {
     var path = studentsURL + index;
     
     var settings = {
@@ -107,6 +141,24 @@ var getCourses = function(){
     });
 }
 
+var getCourseGrades = function(courseName){
+    var path = coursesURL+ courseName + '/grades/'
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        gradeTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
 var updateCourse = function(course) {
     let name = course.courseName();
     
@@ -129,7 +181,7 @@ var updateCourse = function(course) {
 
 $.ajax(settings).done(function (response) {
     console.log(response);
-    getStudents();
+    getCourses();
 });
 }
 
@@ -152,10 +204,8 @@ $.ajax(settings).done(function (response) {
 });
 }
 
-var deleteCourse = function(course) {
-    let index = course.courseName();
-
-    var path = coursesURL + index;
+var deleteCourse = function(courseName) {
+    var path = coursesURL + courseName;
     
     var settings = {
   "async": true,
