@@ -37,9 +37,14 @@ var selectCourse = function(data){
     courseTable.valueHasMutated();
 }
 
+ko.applyBindings(studentTable, document.getElementById("studentsTableBody"));
+ko.applyBindings(courseTable, document.getElementById("coursesTableBody"));
+ko.applyBindings(courseTable, document.getElementById("studentCoursesTableBody"));
+ko.applyBindings(gradeTable, document.getElementById("gradesTableBody"));
+ko.applyBindings(gradeTable, document.getElementById("studentGradesTableBody"));
 
-ko.applyBindings(studentTable, document.getElementById("students"));
-ko.applyBindings(courseTable, document.getElementById("courses"))
-ko.applyBindings(courseTable, document.getElementById("studentCourses"));
-ko.applyBindings(gradeTable, document.getElementById("grades"));
-ko.applyBindings(gradeTable, document.getElementById("studentGrades"));
+ko.applyBindings(studentSearch, document.getElementById("studentsTableHead"));
+ko.applyBindings(courseSearch, document.getElementById("coursesTableHead"));
+ko.applyBindings(studentCoursesSearch, document.getElementById("studentCoursesTableHead"));
+ko.applyBindings(courseGradesSearch, document.getElementById("gradesTableHead"));
+ko.applyBindings(studentGradesSearch, document.getElementById("studentGradesTableHead"));

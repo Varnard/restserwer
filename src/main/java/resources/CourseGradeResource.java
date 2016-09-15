@@ -21,7 +21,9 @@ public class CourseGradeResource {
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public List<Grade> getAllGrades(@PathParam("courseName") String courseName,
                                     @DefaultValue("2") @QueryParam("higherThan") double higherValue,
-                                    @DefaultValue("5") @QueryParam("lowerThan") double lowerValue)
+                                    @DefaultValue("5") @QueryParam("lowerThan") double lowerValue,
+                                    @DefaultValue("0") @QueryParam("studentIndex") int index,
+                                    @DefaultValue("0") @QueryParam("mark") double mark)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -35,13 +37,20 @@ public class CourseGradeResource {
             for (Grade grade : found.getGrades())
             {
                 if (grade.getMark()>higherValue && grade.getMark()<lowerValue)
-                grade.setCoursePath("true");
-                grade.setStudentPath("false");
-                list.add(grade);
+                {
+                    if(grade.getMark()==mark || mark==0)
+                    {
+                        if(grade.getStudentIndex()==index || index==0)
+                        {
+                            grade.setCoursePath("true");
+                            grade.setStudentPath("false");
+                            list.add(grade);
+                        }
+                    }
+                }
             }
 
-            if (list.isEmpty())throw new NotFoundException();
-            else return list;
+            return list;
         }
         else throw new NotFoundException();
     }

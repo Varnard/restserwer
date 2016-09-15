@@ -22,10 +22,11 @@ public class StudentResource {
     @GET
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public List<Student> getAllStudents(@DefaultValue("") @QueryParam("name") String studentName,
-                                        @DefaultValue("") @QueryParam("last name") String studentLastName,
+                                        @DefaultValue("") @QueryParam("lastName") String studentLastName,
+                                        @DefaultValue("0") @QueryParam("index") int index,
                                         @DefaultValue("") @QueryParam("bornAfter") String bDateAfter,
                                         @DefaultValue("") @QueryParam("bornBefore") String bDateBefore,
-                                        @DefaultValue("") @QueryParam("born") String bDate)
+                                        @DefaultValue("") @QueryParam("birthdate") String bDate)
     {
         final Morphia morphia = new Morphia();
         final Datastore datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "morphia_example");
@@ -36,8 +37,8 @@ public class StudentResource {
         for (Student s : datastore.find(Student.class).asList())
         {
             boolean result = true;
-            if (s.getName().toLowerCase().contains(studentName.toLowerCase())) result=false;
-            if (s.getLastName().toLowerCase().contains(studentLastName.toLowerCase())) result=false;
+            if (!(s.getName().toLowerCase().contains(studentName.toLowerCase()))) result=false;
+            if (!(s.getLastName().toLowerCase().contains(studentLastName.toLowerCase()))) result=false;
             if (!bDateAfter.equals(""))
             {
                 try {
@@ -61,6 +62,10 @@ public class StudentResource {
                 } catch (ParseException e) {
                     result=false;
                 }
+            }
+            if (index!=0)
+            {
+                if (index!=s.getIndex()) result=false;
             }
 
             if(result)list.add(s);

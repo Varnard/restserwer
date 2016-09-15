@@ -23,6 +23,31 @@ var getStudents = function(){
     });
 }
 
+var getSearchedStudents = function(){
+    
+    var params = ko.mapping.toJS(studentSearch.get());
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": studentsURL,
+        "data" : params,
+        "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        studentTable(ko.mapping.fromJS(response)());
+        studentTable().forEach(function(item){
+            item.name.subscribe(function(){updateStudent(item)})
+            item.lastName.subscribe(function(){updateStudent(item)})
+            item.birthdate.subscribe(function(){updateStudent(item)})
+                  });
+    });
+}
+
 var getStudentCourses = function(index){
     var path = studentsURL+ index + '/courses/'
     
@@ -41,6 +66,27 @@ var getStudentCourses = function(index){
     });
 }
 
+var getSearchedStudentCourses = function(index){
+    let params = ko.mapping.toJS(studentCoursesSearch.get());
+    
+    var path = studentsURL+ index + '/courses/'
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET",
+        "data": params,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        courseTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
 var getStudentGrades = function(index, courseName){
     var path = studentsURL+ index + '/courses/' + courseName + '/grades/'
     
@@ -49,6 +95,27 @@ var getStudentGrades = function(index, courseName){
         "crossDomain": true,
         "url": path,
         "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+       gradeTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
+var getSearchedStudentGrades = function(index, courseName){
+    let params = ko.mapping.toJS(studentGradesSearch.get());
+    
+    var path = studentsURL+ index + '/courses/' + courseName + '/grades/';
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET" ,
+        "data" : params,
         "headers": {
         "accept": "application/json"
         }
@@ -86,7 +153,7 @@ $.ajax(settings).done(function (response) {
 }
 
 var addStudent = function() {
-    var settings = {
+   var settings = {
   "async": true,
   "crossDomain": true,
   "url": studentsURL,
@@ -141,6 +208,31 @@ var getCourses = function(){
     });
 }
 
+
+var getSearchedCourses = function(){
+    var params = ko.mapping.toJS(courseSearch.get());
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": coursesURL,
+        "method": "GET" ,
+        "data" : params,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        courseTable(ko.mapping.fromJS(response)());
+        courseTable().forEach(function(item){
+            item.teacher.subscribe(function(){updateCourse(item)})
+            item.courseName.subscribe(function(){updateCourse(item)})
+                  });
+    });
+}
+
+
 var getCourseGrades = function(courseName){
     var path = coursesURL+ courseName + '/grades/'
     
@@ -149,6 +241,27 @@ var getCourseGrades = function(courseName){
         "crossDomain": true,
         "url": path,
         "method": "GET" ,
+        "headers": {
+        "accept": "application/json"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        gradeTable(ko.mapping.fromJS(response)()); 
+    });
+}
+
+var getSearchedCourseGrades = function(courseName){
+    let params = ko.mapping.toJS(courseGradesSearch.get());
+    
+    var path = coursesURL+ courseName + '/grades/'
+    
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": path,
+        "method": "GET" ,
+        "data" : params,
         "headers": {
         "accept": "application/json"
         }

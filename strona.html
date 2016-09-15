@@ -14,7 +14,7 @@
     
     <div class="header">
     <img src="logo_pp100b.png" alt="logo" />
-        <h1>TPSI Student Grades</h1>        
+        <h1>TPSI Student Grades</h1>
     </div>
     
         
@@ -31,35 +31,35 @@
 <article>
     <p class="description">Table 1: List of students.</p>
  <table class="data" id="studentsTable">
-     <thead>
+     <thead id="studentsTableHead">
      <tr>
         <th>
             Name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchName" placeholder="search">
             </form>
          </th>
         <th>
             Last Name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchLastName" placeholder="search">
             </form>
          </th>
          <th>
             Index
             <form>
-                <input type="number" placeholder="search">
+                <input type="number" data-bind="textInput: searchIndex" placeholder="search">
             </form>
          </th>
          <th>
             Birth date
             <form>
-                <input type="date">
+                <input type="date" data-bind="textInput: searchBirthdate">
             </form>
          </th>
     </tr>
      </thead>
-     <tbody data-bind="foreach: studentTable">
+     <tbody id="studentsTableBody" data-bind="foreach: studentTable">
     <tr data-bind="click: selectStudent, css: { selectedRow: index()===activeStudent }" >
         <td>
             <form>
@@ -99,23 +99,23 @@
 <article>
     <p class="description">Table 1: List of courses.</p>
  <table class="data">
-     <thead>
+     <thead id="coursesTableHead">
     <tr>
         <th>
             Teacher name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchTeacher" placeholder="search">
             </form>
          </th>
         <th>
             Course name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchCourseName" placeholder="search">
             </form>
          </th>
     </tr>
      </thead>
-     <tbody data-bind="foreach: courseTable">
+     <tbody id="coursesTableBody" data-bind="foreach: courseTable">
      <tr data-bind="click: selectCourse, css: { selectedRow: courseName()===activeCourse }" >
         <td>
             <form>
@@ -148,23 +148,23 @@
 <article>
     <p class="description">Table 1: List of courses.</p>
  <table class="data">
-     <thead>
+     <thead id="studentCoursesTableHead">
     <tr>
         <th>
             Teacher name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchTeacher" placeholder="search">
             </form>
          </th>
         <th>
             Course name
             <form>
-                <input type="text" placeholder="search">
+                <input type="text" data-bind="textInput: searchCourseName" placeholder="search">
             </form>
          </th>
     </tr>
      </thead>
-     <tbody data-bind="foreach: courseTable">
+     <tbody id="studentCoursesTableBody" data-bind="foreach: courseTable">
      <tr data-bind="click: selectCourse, css: { selectedRow: courseName()===activeCourse }" >
         <td>
             <form>
@@ -197,29 +197,29 @@
 <article>
     <p class="description">Table 1: List of grades.</p>
  <table class="data">
-     <thead>
+     <thead id="gradesTableHead">
     <tr>
         <th>
             Date
             <form>
-                <input type="date">
+                <input type="date" data-bind="textInput: searchDate">
             </form>
          </th>
         <th>
             Index
             <form>
-                <input type="number" placeholder="search">
+                <input type="number" data-bind="textInput: searchStudentIndex" placeholder="search">
             </form>
          </th>
         <th>
             Mark
             <form>
-                <input type="number" placeholder="search">
+                <input type="number" data-bind="textInput: searchMark" placeholder="search">
             </form>
          </th>
     </tr>
      </thead>
-     <tbody data-bind="foreach: gradeTable">
+     <tbody id="gradesTableBody" data-bind="foreach: gradeTable">
     <tr>
         <td>
             <form>
@@ -262,23 +262,23 @@
 <article>
     <p class="description">Table 1: List of grades.</p>
  <table class="data">
-     <thead>
+     <thead id="studentGradesTableHead">
     <tr>
         <th>
             Date
             <form>
-                <input type="date">
+                <input type="date" data-bind="textInput: searchDate">
             </form>
          </th>
-        <th>
+         <th>
             Mark
             <form>
-                <input type="number" placeholder="search">
+                <input type="number" data-bind="textInput: searchMark" placeholder="search">
             </form>
          </th>
     </tr>
      </thead>
-     <tbody data-bind="foreach: gradeTable">
+     <tbody id="studentGradesTableBody" data-bind="foreach: gradeTable">
     <tr>
         <td>
             <form>

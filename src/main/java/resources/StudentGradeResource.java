@@ -19,7 +19,8 @@ public class StudentGradeResource {
     @Produces({MediaType.APPLICATION_XML , MediaType.APPLICATION_JSON})
     public ArrayList<Grade> getAllGrades(@PathParam("index") int index, @PathParam("courseName") String courseName,
                                          @DefaultValue("2") @QueryParam("higherThan") double higherValue,
-                                         @DefaultValue("5") @QueryParam("lowerThan") double lowerValue)
+                                         @DefaultValue("5") @QueryParam("lowerThan") double lowerValue,
+                                         @DefaultValue("0") @QueryParam("mark") double mark)
     {
         ArrayList<Grade> list = new ArrayList<>();
 
@@ -35,9 +36,12 @@ public class StudentGradeResource {
             {
                 if (grade.getStudentIndex()==index && grade.getMark()>higherValue && grade.getMark()<lowerValue)
                 {
-                    grade.setCoursePath("false");
-                    grade.setStudentPath("true");
-                    list.add(grade);
+                    if(grade.getMark()==mark || mark==0)
+                    {
+                        grade.setCoursePath("false");
+                        grade.setStudentPath("true");
+                        list.add(grade);
+                    }
                 }
             }
         }
